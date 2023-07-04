@@ -225,7 +225,7 @@ Devuelve todos los aeropuertos, en una página con un tamaño determinado y un l
 
 *Respuesta:*
 - Código de estado: 200 (OK)
-- Cuerpo de respuesta: Array de objetos de aeropuerto de una página específica
+- Cuerpo de respuesta: Array de objetos de aeropuerto, de una página específica
 
 ---
 
@@ -238,7 +238,7 @@ Devuelve todos los aeropuertos, filtrados por nombre.
 
 *Respuesta:*
 - Código de estado: 200 (OK)
-- Cuerpo de respuesta: Array de objetos de aeropuerto filtrados por país
+- Cuerpo de respuesta: Array de objetos de aeropuerto filtrados por nombre
 
 ---
 
@@ -284,7 +284,7 @@ Se permite cualquier combinación de ordenamiento y paginacion posible. Algunos 
 
 - Método: PUT
 - Ruta: /airport/:ID
-- Cuerpo de la solicitud: Objeto de vuelo actualizado
+- Cuerpo de la solicitud: Objeto de aeropuerto actualizado
 
 ```json
 {
