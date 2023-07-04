@@ -98,7 +98,7 @@ Devuelve todos los vuelos (items) filtrados por destino.
 Se permite cualquier combinación de paginación, ordenamiento y filtrado posible. Algunos ejemplos son:
 
 - GET `/flight?orderBy=price&direction=asc&page=2`
-- GET `/flight?destination=1&orderBy=duration&direction=desc`
+- GET `/flight?orderBy=price&direction=desc&page=1`
 
 ----
 #### Obtener un vuelo por un ID específico
@@ -119,11 +119,13 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 - Ruta: `/flight`
 - Cuerpo de solicitud: Objeto de vuelo a crear
 
-  	{
-  		destination: '1'
-  		price: '50000'
-  		duration: '02:00:00'
-  	}
+```json
+{
+  "destination": "1",
+  "price": "50000",
+  "duration": "02:00:00"
+}
+```
 
 *Respuesta:*
 
