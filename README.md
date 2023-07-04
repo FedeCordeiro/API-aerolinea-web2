@@ -1,3 +1,4 @@
+[![made-with-PHP](https://img.shields.io/badge/Made%20with-PHP-1f425f.svg)](https://www.php.net/)
 ## API REST
 
 ### Índice
@@ -29,11 +30,11 @@
 
 ### Códigos de estado
 
-- #####200 OK: La solicitud se ha procesado correctamente.
-- #####201 Created: La solicitud se ha completado y se ha creado un nuevo recurso como resultado.
-- #####400 Bad Request: La solicitud no se pudo entender o tenía parámetros inválidos.
-- #####404 Not Found: El recurso solicitado no se encontró en el servidor.
-- #####500 Internal Server Error: Se produjo un error interno en el servidor al procesar la solicitud.
+- 200 OK: La solicitud se ha procesado correctamente.
+- 201 Created: La solicitud se ha completado y se ha creado un nuevo recurso como resultado.
+- 400 Bad Request: La solicitud no se pudo entender o tenía parámetros inválidos.
+- 404 Not Found: El recurso solicitado no se encontró en el servidor.
+- 500 Internal Server Error: Se produjo un error interno en el servidor al procesar la solicitud.
 
 ---
 
@@ -50,7 +51,7 @@
 
 ---
 
-##### Ordenamiento
+#### Ordenamiento
 
 Devuelve todos los vuelos (items) ordenados por el atributo que se desee:
 
@@ -66,7 +67,7 @@ Devuelve todos los vuelos (items) ordenados por el atributo que se desee:
 
 ---
 
-##### Paginación
+#### Paginación
 
 Devuelve todos los vuelos (items) en una página con un tamaño determinado y un límite predeterminado de 3 objetos por página.
 
@@ -79,7 +80,7 @@ Devuelve todos los vuelos (items) en una página con un tamaño determinado y un
 
 ---
 
-##### Filtrado
+#### Filtrado
 
 Devuelve todos los vuelos (items) filtrados por destino.
 
@@ -92,7 +93,7 @@ Devuelve todos los vuelos (items) filtrados por destino.
 
 ---
 
-##### Combinado
+#### Combinado
 
 Se permite cualquier combinación de paginación, ordenamiento y filtrado posible. Algunos ejemplos son:
 
@@ -172,7 +173,7 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 - Cuerpo de respuesta: Array de objetos de aeropuerto
 ---
 
-##### Ordenamiento
+#### Ordenamiento
 
 Devuelve todos los aeropuertos (items) ordenados por el atributo que se desee:
 
@@ -188,7 +189,7 @@ Devuelve todos los aeropuertos (items) ordenados por el atributo que se desee:
 
 ---
 
-##### Paginación
+#### Paginación
 
 Devuelve todos los aeropuertos (items) en una página con un tamaño determinado y un límite predeterminado de 3 objetos por página.
 
@@ -201,7 +202,7 @@ Devuelve todos los aeropuertos (items) en una página con un tamaño determinado
 
 ---
 
-##### Filtrado
+#### Filtrado
 
 Devuelve todos los aeropuertos (items) filtrados por nombre.
 
@@ -214,7 +215,7 @@ Devuelve todos los aeropuertos (items) filtrados por nombre.
 
 ---
 
-##### Combinado
+#### Combinado
 
 Se permite cualquier combinación de paginación, ordenamiento y filtrado posible. Algunos ejemplos son:
 
@@ -276,5 +277,4 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 *Respuesta:*
 - Código de estado: 200 (OK)
 - Cuerpo de respuesta: Mensaje de éxito
-
 ---
