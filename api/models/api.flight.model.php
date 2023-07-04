@@ -81,4 +81,21 @@ class ApiFlightModel
 
         return $flights;
     }
+
+    public function getFlightsByDestination($destination)
+    {
+        // 1. Preparar la consulta
+        $query = "SELECT * FROM flight WHERE destination = :destination";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':destination', $destination);
+
+        // 2. Ejecutar la consulta
+        $stmt->execute();
+
+        // 3. Obtener los resultados
+        $flights = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $flights;
+    }
+
 }

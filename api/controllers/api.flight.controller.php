@@ -21,30 +21,49 @@ class ApiFlightController extends ApiController
     }
 
     public function showFlight()
-    {
-        $orderBy = isset($_GET['orderBy']) ? $_GET['orderBy'] : '';
-        $order = isset($_GET['direction']) ? $_GET['direction'] : '';
-        $page = isset($_GET['page']) ? $_GET['page'] : null;
-        $limit = 3; // Límite fijo de 3 vuelos por página
+{
+    $orderBy = isset($_GET['orderBy']) ? $_GET['orderBy'] : '';
+    $order = isset($_GET['direction']) ? $_GET['direction'] : '';
+    $page = isset($_GET['page']) ? $_GET['page'] : null;
+    $limit = 3; // Límite fijo de 3 vuelos por página
 
-        if ($orderBy && $order) {
-            $flights = $this->ApiFlightModel->getFlightsOrderedByAttribute($orderBy, $order);
-        } else {
-            $flights = $this->ApiFlightModel->getAllFlight();
+    // Obtener el campo de destino para filtrar
+    $destination = isset($_GET['destination']) ? $_GET['destination'] : '';
+
+    if ($orderBy && $order) {
+        if ($order !== 'asc' && $order !== 'desc') {
+            // Error 400 - Solicitud incorrecta
+            $this->ApiView->response("El ordenamiento de manera '$order' no es valido. Los posibles valores son 'asc' o 'desc'", 400);
+            return;
         }
 
-        // Si se especifica la página, realizar paginación
-        if ($page !== null) {
-            $response = $this->paginateFlights($flights, $page, $limit);
-            if ($response === null) {
-                return; // Finalizar la ejecución en caso de error
-            }
-        } else {
-            $response = $flights; // Mostrar todos los vuelos sin paginación
+        $flights = $this->ApiFlightModel->getFlightsOrderedByAttribute($orderBy, $order);
+    } elseif ($destination) {
+        // Validar el destino ingresado
+        if (!$this->isValidDestination($destination)) {
+            // Error 404 - No encontrado
+            $this->ApiView->response("Vuelo con el destino = $destination, no fue encontrado en la base de datos", 404);
+            return;
         }
 
-        $this->ApiView->response($response, 200);
+        $flights = $this->ApiFlightModel->getFlightsByDestination($destination);
+    } else {
+        $flights = $this->ApiFlightModel->getAllFlight();
     }
+
+    // Si se especifica la página, realizar paginación
+    if ($page !== null) {
+        $response = $this->paginateFlights($flights, $page, $limit);
+        if ($response === null) {
+            return; // Finalizar la ejecución en caso de error
+        }
+    } else {
+        $response = $flights; // Mostrar todos los vuelos sin paginación
+    }
+
+    $this->ApiView->response($response, 200);
+}
+
 
     private function paginateFlights($flights, $page, $limit)
     {

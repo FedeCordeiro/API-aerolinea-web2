@@ -21,14 +21,27 @@ class ApiAirportController extends ApiController
     {
         $orderBy = isset($_GET['orderBy']) ? $_GET['orderBy'] : '';
         $order = isset($_GET['direction']) ? $_GET['direction'] : '';
-        $filter = isset($_GET['name']) ? $_GET['name'] : '';
+        $name = isset($_GET['name']) ? $_GET['name'] : '';
         $page = isset($_GET['page']) ? $_GET['page'] : null;
         $limit = 3; // Límite fijo de 3 aeropuertos por página
     
         if ($orderBy && $order) {
+            if ($order !== 'asc' && $order !== 'desc') {
+                // Error 400 - Solicitud incorrecta
+                $this->ApiView->response("El ordenamiento de manera '$order' no es valido. Los posibles valores son 'asc' o 'desc'", 400);
+                return;
+            }
+    
             $airports = $this->ApiAirportModel->getAirportsOrderedByAttribute($orderBy, $order);
-        } elseif ($filter) {
-            $airports = $this->ApiAirportModel->getAirportsFilteredByName($filter);
+        } elseif ($name) {
+            // Validar el nombre ingresado
+            if (!$this->isValidAirportName($name)) {
+                // Error 404 - No encontrado
+                $this->ApiView->response("Aeropuerto con el nombre = $name, no fue encontrado en la base de datos", 404);
+                return;
+            }
+    
+            $airports = $this->ApiAirportModel->getAirportsFilteredByName($name);
         } else {
             $airports = $this->ApiAirportModel->getAllAirport();
         }
@@ -44,6 +57,19 @@ class ApiAirportController extends ApiController
         }
     
         $this->ApiView->response($response, 200);
+    }
+    
+    private function isValidAirportName($name)
+    {
+        $airports = $this->ApiAirportModel->getAllAirport();
+    
+        foreach ($airports as $airport) {
+            if ($name == $airport->name) {
+                return true;
+            }
+        }
+    
+        return false;
     }
     
     private function paginateAirports($airports, $page, $limit)
