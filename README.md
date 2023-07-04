@@ -1,9 +1,9 @@
-[![made-with-PHP](https://img.shields.io/badge/Made%20with-PHP-1f425f.svg)](https://www.php.net/)
+[![made-with-PHP](https://img.shields.io/badge/Made%20with-PHP-1f425f.svg)](https://www.php.net/)[![API](https://img.shields.io/badge/Made%20with-API-1f425f.svg)](https://en.wikipedia.org/wiki/Application_programming_interface)[![Database](https://img.shields.io/badge/Database-DB-1f425f.svg)](https://en.wikipedia.org/wiki/Database)
 ## API REST
 
 ### Índice
 
-
+- [Descripcion del proyecto](#descripcion-del-proyecto)
 - [Códigos de estado](#códigos-de-estado)
 - [Endpoints Vuelos (Flight)](#endpoints-vuelos-flight)
     - [Obtener todos los vuelos disponibles](#obtener-todos-los-vuelos-disponibles)
@@ -28,6 +28,25 @@
 
 ---
 
+### Descripcion del proyecto
+
+La API de aerolínea permite gestionar y consultar información de vuelos y aeropuertos. Los usuarios pueden listar, filtrar, ordenar, agregar, editar y borrar vuelos y aeropuertos según sus necesidades.
+
+- Listar vuelos o aeropuertos: Los usuarios pueden obtener una lista completa de vuelos o aeropuertos disponibles, con detalles exhaustivos de cada uno.
+
+- Paginar vuelos o aeropuertos: La API permite paginar los resultados de vuelos o aeropuertos, dividiéndolos en páginas de tamaño limitado (3 objetos por página), lo cual facilita la navegación y mejora la experiencia de uso.
+
+- Filtrar vuelos o aeropuertos: Los usuarios pueden aplicar filtros personalizados a la lista de vuelos o aeropuertos, permitiéndoles obtener resultados que se ajusten a criterios específicos y facilitando la búsqueda de información relevante.
+
+- Ordenar vuelos o aeropuertos: Los resultados de la lista de vuelos o aeropuertos pueden ordenarse según múltiples criterios. Esto proporciona flexibilidad a los usuarios para obtener la información en el orden deseado.
+
+- Agregar vuelos o aeropuertos: Los usuarios tienen la capacidad de agregar nuevos vuelos o aeropuertos a la base de datos de la aerolínea, proporcionando los detalles necesarios. Esto permite una actualización constante de la información disponible.
+
+- Borrar vuelos o aeropuertos: Los vuelos o aeropuertos existentes pueden eliminarse de la base de datos utilizando la API. Esto se logra mediante el suministro del identificador único del vuelo o aeropuerto que se desea eliminar.
+
+- Editar vuelos o aeropuertos: Los detalles de vuelos o aeropuertos existentes pueden actualizarse a través de la API. Los usuarios pueden modificar información. Lo que brinda flexibilidad en la gestión de la información.
+
+---
 ### Códigos de estado
 
 - 200 OK: La solicitud se ha procesado correctamente.
@@ -53,7 +72,7 @@
 
 #### Ordenamiento
 
-Devuelve todos los vuelos (items) ordenados por el atributo que se desee:
+Devuelve todos los vuelos, ordenados por el atributo que se desee:
 
 - id_flight
 - destination
@@ -69,7 +88,7 @@ Devuelve todos los vuelos (items) ordenados por el atributo que se desee:
 
 #### Paginación
 
-Devuelve todos los vuelos (items) en una página con un tamaño determinado y un límite predeterminado de 3 objetos por página.
+Devuelve todos los vuelos, en una página con un tamaño determinado y un límite predeterminado de 3 objetos por página.
 
 - Método: GET
 - Ruta: `/flight?page=2`
@@ -82,7 +101,7 @@ Devuelve todos los vuelos (items) en una página con un tamaño determinado y un
 
 #### Filtrado
 
-Devuelve todos los vuelos (items) filtrados por destino.
+Devuelve todos los vuelos, filtrados por destino.
 
 - Método: GET
 - Ruta: `/flight?destination=1`
@@ -95,7 +114,7 @@ Devuelve todos los vuelos (items) filtrados por destino.
 
 #### Combinado
 
-Se permite cualquier combinación de paginación, ordenamiento y filtrado posible. Algunos ejemplos son:
+Se permite cualquier combinación de ordenamiento y paginacion. Algunos ejemplos son:
 
 - GET `/flight?orderBy=price&direction=asc&page=2`
 - GET `/flight?orderBy=price&direction=desc&page=1`
@@ -132,6 +151,10 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 - Código de estado: 201 (Created)
 - Cuerpo de respuesta: Objeto de vuelo recién creado
 
+NOTA:
+- El atributo "price" debe estar entre los rangos (10000>50000)
+- El atributo "destination" debe coincidir con los aeropuertos disponibles
+
 ---
 
 ### Editar un vuelo existente
@@ -140,11 +163,13 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 - Ruta: /flight/:ID
 - Cuerpo de la solicitud: Objeto de vuelo actualizado
 
-  	{
-  		destination: '1'
-  		price: '50000'
-  		duration: '02:00:00'
-  	}
+```json
+{
+  "destination": "1",
+  "price": "50000",
+  "duration": "02:00:00"
+}
+```
 
 *Respuesta:*
 - Código de estado: 200 (OK)
@@ -177,7 +202,7 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 
 #### Ordenamiento
 
-Devuelve todos los aeropuertos (items) ordenados por el atributo que se desee:
+Devuelve todos los aeropuertos, ordenados por el atributo que se desee:
 
 - id_airport
 - name
@@ -187,13 +212,13 @@ Devuelve todos los aeropuertos (items) ordenados por el atributo que se desee:
 *Ejemplos:*
 
 - GET `/airport?orderBy=name&direction=asc`
-- GET `/airport?orderBy=country&direction=desc`
+- GET `/airport?orderBy=ubication&direction=desc`
 
 ---
 
 #### Paginación
 
-Devuelve todos los aeropuertos (items) en una página con un tamaño determinado y un límite predeterminado de 3 objetos por página.
+Devuelve todos los aeropuertos, en una página con un tamaño determinado y un límite predeterminado de 3 objetos por página.
 
 - Método: GET
 - Ruta: `/airport?page=2`
@@ -206,7 +231,7 @@ Devuelve todos los aeropuertos (items) en una página con un tamaño determinado
 
 #### Filtrado
 
-Devuelve todos los aeropuertos (items) filtrados por nombre.
+Devuelve todos los aeropuertos, filtrados por nombre.
 
 - Método: GET
 - Ruta: `/airport?name=El Plumerillo`
@@ -219,7 +244,7 @@ Devuelve todos los aeropuertos (items) filtrados por nombre.
 
 #### Combinado
 
-Se permite cualquier combinación de paginación, ordenamiento y filtrado posible. Algunos ejemplos son:
+Se permite cualquier combinación de ordenamiento y paginacion posible. Algunos ejemplos son:
 
 - GET `/airport?orderBy=name&direction=asc&page=2`
 - GET `/airport?orderBy=ubication&direction=desc&page=1`
@@ -241,11 +266,13 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 - Ruta: `/airport`
 - Cuerpo de solicitud: Objeto de aeropuerto a agregar
 
-  	{
-  		name: 'Aeropuerto Necochea'
-  		ubication: 'Necochea, Buenos Aires'
-  		image: 'https://imagen-aeropuerto-necochea'
-  	}
+```json
+{
+  "name": "Aeropuerto Necochea",
+  "ubication": "Necochea, Buenos Aires",
+  "image": "https://imagen-aeropuerto-necochea"
+}
+```
 
 *Respuesta:*
 - Código de estado: 201 (Created)
@@ -259,11 +286,13 @@ Se permite cualquier combinación de paginación, ordenamiento y filtrado posibl
 - Ruta: /airport/:ID
 - Cuerpo de la solicitud: Objeto de vuelo actualizado
 
-  	{
-  		name: 'Aeropuerto Necochea'
-  		ubication: 'Necochea, Buenos Aires'
-  		image: 'https://imagen-aeropuerto-necochea'
-  	}
+```json
+{
+  "name": "Aeropuerto Necochea",
+  "ubication": "Necochea, Buenos Aires",
+  "image": "https://imagen-aeropuerto-necochea"
+}
+```
 
 *Respuesta:*
 - Código de estado: 200 (OK)
